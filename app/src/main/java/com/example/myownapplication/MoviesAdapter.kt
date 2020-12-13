@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.myownapplication.data.Movie
 
 class MoviesAdapter(private val clickListener: (Movie) -> Unit) :
     RecyclerView.Adapter<MoviesViewHolder>() {
@@ -45,13 +47,14 @@ class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun onBind(movie: Movie, clickListener: (Movie) -> Unit) {
         itemView.setOnClickListener { clickListener(movie) }
-        backgroundImage.setImageResource(movie.backgroundImage)
-        ageLimitation.text = movie.ageLimitation
-        genre.text = movie.genre
-        countOfStarsOnRatingBar.rating = movie.countOfStarsOnRatingBar.toFloat()
-        countOfReviews.text = movie.countOfReviews
+        Glide.with(itemView.context)
+            .load(movie.poster)
+            .into(backgroundImage)
+        ageLimitation.text = movie.minimumAge.toString() + "+"
+        genre.text = movie.genres.map { it.name }.joinToString(separator = ", ")
+        countOfStarsOnRatingBar.rating = movie.ratings / 2
         title.text = movie.title
-        duration.text = movie.duration
+        duration.text = movie.runtime.toString() + " min"
 
     }
 }

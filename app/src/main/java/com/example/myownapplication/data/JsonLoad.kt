@@ -69,11 +69,11 @@ internal fun parseActors(data: String): List<Actor> {
 
 @Suppress("unused")
 internal suspend fun loadMovies(context: Context): List<Movie> = withContext(Dispatchers.IO) {
-    val genresMap = loadGenres(context)
-    val actorsMap = loadActors(context)
+    val genres = loadGenres(context)
+    val actors = loadActors(context)
 
     val data = readAssetFileToString(context, "data.json")
-    parseMovies(data, genresMap, actorsMap)
+    parseMovies(data, genres, actors)
 }
 
 internal fun parseMovies(
@@ -83,6 +83,7 @@ internal fun parseMovies(
 ): List<Movie> {
     val genresMap = genres.associateBy { it.id }
     val actorsMap = actors.associateBy { it.id }
+
 
     val jsonMovies = jsonFormat.decodeFromString<List<JsonMovie>>(data)
 
