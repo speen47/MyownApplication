@@ -1,24 +1,26 @@
 package com.example.myownapplication
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myownapplication.data.loadMovies
-import kotlinx.coroutines.*
+import com.example.myownapplication.ViewModels.MovieListViewModel
+import com.example.myownapplication.ViewModels.ViewModelFactory
+import com.example.myownapplication.data.Movie
 
 class FragmentMovieList : Fragment() {
 
-    val handlerException = CoroutineExceptionHandler { coroutineContext, throwable ->
-        Log.d("Mylog", "exception handled: ${throwable.message}")
-    }
+    private val viewModel: MovieListViewModel by viewModels { ViewModelFactory() }
 
-    val coroutineContext = SupervisorJob() + Dispatchers.Default + handlerException
-    val coroutineScope = CoroutineScope(coroutineContext)
+//    val handlerException = CoroutineExceptionHandler { coroutineContext, throwable ->
+//        Log.d("Mylog", "exception handled: ${throwable.message}")
+//    }
+//    val coroutineContext = SupervisorJob() + Dispatchers.Default + handlerException
+//    val coroutineScope = CoroutineScope(coroutineContext)
 
     private lateinit var adapter: MoviesAdapter
 
@@ -36,7 +38,7 @@ class FragmentMovieList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = MoviesAdapter {
             requireActivity().supportFragmentManager.beginTransaction()
-                .add(R.id.main_container, FragmentMoviesDetails())
+                .add(R.id.main_container, FragmentMoviesDetails.newInstance(it))
                 .addToBackStack(null)
                 .commit()
         }
@@ -45,11 +47,13 @@ class FragmentMovieList : Fragment() {
         recycler?.adapter = adapter
         recycler?.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        coroutineScope.launch {
-            var movies = loadMovies(requireContext())
-            adapter.updateList(movies)
-        }
+        viewModel.openMoviesLiveData.observe(this.viewLifecycleOwner, { upDateList(it) })
 
+        viewModel.getMovies()
+    }
+
+    private fun upDateList(movies: List<Movie>) {
+        adapter.updateList(movies)
     }
 
 

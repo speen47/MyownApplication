@@ -7,12 +7,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.myownapplication.data.Actor
+import com.example.myownapplication.data.Movie
 
-class ActorsAdapter : RecyclerView.Adapter<ActorsViewHolder>() {
+class ActorsAdapter(movie: Movie) : RecyclerView.Adapter<ActorsViewHolder>() {
 
-    private var actors = listOf<Actor>()
+//    private var actors = listOf<Actor>()
 
+    private var actors = movie.actors
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
         return ActorsViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.view_holder_actors, parent, false)
@@ -39,10 +42,10 @@ class ActorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val name: TextView = itemView.findViewById(R.id.tv_name)
 
     fun onBind(actor: Actor) {
-//        avatar.setImageResource(actor.avatar)
         name.text = actor.name
         Glide.with(itemView.context)
             .load(actor.picture)
+            .apply(RequestOptions().centerCrop())
             .into(avatar)
     }
 }
