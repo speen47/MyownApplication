@@ -9,4 +9,8 @@ class MoviesInteractorImpl : MoviesInteractor {
     override suspend fun getMovies(): List<Movie> {
         return repository.getMoviesFromNetwork().map { it.toDomain() }
     }
+
+    override suspend fun getMovieDetails(id: Long): Movie {
+        return repository.getMovieDetailsFromNetwork(id).toDomain()
+    }
 }

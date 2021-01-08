@@ -1,5 +1,6 @@
 package com.example.myownapplication.data.network
 
+import com.example.myownapplication.data.network.actor.ActorsApi
 import com.example.myownapplication.data.network.configuration.ConfigurationApi
 import com.example.myownapplication.data.network.movie.MoviesApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -23,5 +24,6 @@ object RetrofitModule {
 
     val moviesApi: MoviesApi = retrofit.create()
     val configurationApi: ConfigurationApi = retrofit.create()
+    val actorsApi: ActorsApi = retrofit.create()
 }
 

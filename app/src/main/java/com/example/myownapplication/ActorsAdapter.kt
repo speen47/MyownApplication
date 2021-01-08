@@ -9,16 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.myownapplication.data.Actor
-import com.example.myownapplication.data.Movie
 
-class ActorsAdapter(movie: Movie) : RecyclerView.Adapter<ActorsViewHolder>() {
+class ActorsAdapter() : RecyclerView.Adapter<ActorsViewHolder>() {
 
-//    private var actors = listOf<Actor>()
 
-    private var actors = movie.actors
+    private var actors = listOf<Actor>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
         return ActorsViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_actors, parent, false)
+                LayoutInflater.from(parent.context).inflate(R.layout.view_holder_actors, parent, false)
         )
     }
 
@@ -34,6 +33,7 @@ class ActorsAdapter(movie: Movie) : RecyclerView.Adapter<ActorsViewHolder>() {
         actors = newActors
         notifyDataSetChanged()
     }
+
 
 }
 

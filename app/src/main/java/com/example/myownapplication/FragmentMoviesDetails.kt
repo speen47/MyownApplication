@@ -15,10 +15,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.myownapplication.ViewModels.MovieDetailsViewModel
 import com.example.myownapplication.ViewModels.ViewModelFactory
+import com.example.myownapplication.data.Actor
 import com.example.myownapplication.data.Movie
 
 
 class FragmentMoviesDetails() : Fragment() {
+
 
     var title: TextView? = null
     var banner: ImageView? = null
@@ -45,17 +47,22 @@ class FragmentMoviesDetails() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val movie = arguments?.getSerializable(KEY) as Movie
-        setContentViews(movie, view)
 
-        adapter = ActorsAdapter(movie)
+        adapter = ActorsAdapter()
         // var actors = ActorsDataSource().getActors()
         recycler = view.findViewById(R.id.rv_actors)
         recycler?.adapter = adapter
         recycler?.layoutManager =
-            LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
 
 
+        viewModel.openMoviesLiveData.observe(this.viewLifecycleOwner, { (it?.let { setContentViews(it, view) }) })
+        viewModel.openActorsLiveData.observe(this.viewLifecycleOwner, { it.let { upDateList(it) } })
+
+        viewModel.getMovieDetails(movie.id)
+        viewModel.getActors(movie.id)
     }
+
 
     private fun findViews(view: View) {
         title = view.findViewById(R.id.tv_title)
@@ -73,10 +80,15 @@ class FragmentMoviesDetails() : Fragment() {
         rating?.rating = movie.ratings / 2
         overview?.text = movie.overview
         Glide.with(view.context)
-            .load(movie.backdrop)
-            .apply(RequestOptions().fitCenter())
-            .into(banner)
+                .load(movie.backdrop)
+                .apply(RequestOptions().fitCenter())
+                .into(banner)
 
+    }
+
+
+    private fun upDateList(actors: List<Actor>) {
+        adapter.upDateList(actors)
     }
 
     companion object {
