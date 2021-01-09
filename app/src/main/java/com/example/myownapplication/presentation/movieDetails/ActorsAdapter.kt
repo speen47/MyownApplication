@@ -1,4 +1,4 @@
-package com.example.myownapplication
+package com.example.myownapplication.presentation.movieDetails
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.myownapplication.data.Actor
+import com.example.myownapplication.R
+import com.example.myownapplication.domain.models.Actor
 
 class ActorsAdapter() : RecyclerView.Adapter<ActorsViewHolder>() {
 
@@ -44,8 +45,8 @@ class ActorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun onBind(actor: Actor) {
         name.text = actor.name
         Glide.with(itemView.context)
-            .load(actor.picture)
-            .apply(RequestOptions().centerCrop())
-            .into(avatar)
+                .load(actor.picture)
+                .apply(RequestOptions().centerCrop())
+                .into(avatar)
     }
 }

@@ -1,7 +1,7 @@
 package com.example.myownapplication.domain.actor
 
-import com.example.myownapplication.data.Actor
 import com.example.myownapplication.data.network.actor.ActorDto
+import com.example.myownapplication.domain.models.Actor
 
 fun ActorDto.toDomain(): Actor {
     return Actor(

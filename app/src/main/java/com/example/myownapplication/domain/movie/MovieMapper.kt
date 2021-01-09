@@ -1,10 +1,10 @@
 package com.example.myownapplication.domain.movie
 
-import com.example.myownapplication.data.Genre
-import com.example.myownapplication.data.Movie
 import com.example.myownapplication.data.network.movie.GenreDto
 import com.example.myownapplication.data.network.movie.MovieDetailsDto
 import com.example.myownapplication.data.network.movie.MovieDto
+import com.example.myownapplication.domain.models.Genre
+import com.example.myownapplication.domain.models.Movie
 
 fun MovieDto.toDomain(): Movie {
     return Movie(

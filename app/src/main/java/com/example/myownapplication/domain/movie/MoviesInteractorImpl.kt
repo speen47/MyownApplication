@@ -1,8 +1,8 @@
 package com.example.myownapplication.domain.movie
 
-import com.example.myownapplication.data.Movie
 import com.example.myownapplication.data.repository.movie.MoviesRepository
 import com.example.myownapplication.data.repository.movie.MoviesRepositoryImpl
+import com.example.myownapplication.domain.models.Movie
 
 class MoviesInteractorImpl : MoviesInteractor {
     private val repository: MoviesRepository = MoviesRepositoryImpl()

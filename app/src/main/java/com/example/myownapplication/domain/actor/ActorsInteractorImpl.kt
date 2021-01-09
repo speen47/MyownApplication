@@ -1,8 +1,8 @@
 package com.example.myownapplication.domain.actor
 
-import com.example.myownapplication.data.Actor
 import com.example.myownapplication.data.repository.actor.ActorsRepository
 import com.example.myownapplication.data.repository.actor.ActorsRepositoryImpl
+import com.example.myownapplication.domain.models.Actor
 
 class ActorsInteractorImpl : ActorsInteractor {
     private val repository: ActorsRepository = ActorsRepositoryImpl()

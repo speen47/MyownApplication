@@ -28,7 +28,7 @@ data class ActorDto(
         val popularity: Double,
 
         @SerialName("profile_path")
-        val profilePath: String,
+        val profilePath: String?,
 
         @SerialName("cast_id")
         val castID: Long,

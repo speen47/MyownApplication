@@ -1,4 +1,4 @@
-package com.example.myownapplication
+package com.example.myownapplication.presentation.movieList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myownapplication.ViewModels.MovieListViewModel
-import com.example.myownapplication.ViewModels.ViewModelFactory
-import com.example.myownapplication.data.Movie
+import com.example.myownapplication.R
+import com.example.myownapplication.domain.models.Movie
+import com.example.myownapplication.presentation.ViewModelFactory
+import com.example.myownapplication.presentation.movieDetails.FragmentMoviesDetails
 
 class FragmentMovieList : Fragment() {
 
@@ -27,9 +28,9 @@ class FragmentMovieList : Fragment() {
     private var recycler: RecyclerView? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
 
@@ -38,9 +39,9 @@ class FragmentMovieList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = MoviesAdapter {
             requireActivity().supportFragmentManager.beginTransaction()
-                .add(R.id.main_container, FragmentMoviesDetails.newInstance(it))
-                .addToBackStack(null)
-                .commit()
+                    .add(R.id.main_container, FragmentMoviesDetails.newInstance(it))
+                    .addToBackStack(null)
+                    .commit()
         }
 
         recycler = view.findViewById(R.id.rv_movies)

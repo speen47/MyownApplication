@@ -16,7 +16,7 @@ data class MovieDetailsDto(
         val id: Long,
 
         @SerialName("imdb_id")
-        val imdbID: String,
+        val imdbID: String?,
 
         @SerialName("original_language")
         val originalLanguage: String,

@@ -1,4 +1,4 @@
-package com.example.myownapplication
+package com.example.myownapplication.presentation.movieList
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +8,18 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.myownapplication.data.Movie
+import com.example.myownapplication.R
+import com.example.myownapplication.domain.models.Movie
 
 class MoviesAdapter(private val clickListener: (Movie) -> Unit) :
-    RecyclerView.Adapter<MoviesViewHolder>() {
+        RecyclerView.Adapter<MoviesViewHolder>() {
 
 
     private var movies = listOf<Movie>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         return MoviesViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_movie, parent, false)
+                LayoutInflater.from(parent.context).inflate(R.layout.view_holder_movie, parent, false)
         )
     }
 
@@ -48,8 +49,8 @@ class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun onBind(movie: Movie, clickListener: (Movie) -> Unit) {
         itemView.setOnClickListener { clickListener(movie) }
         Glide.with(itemView.context)
-            .load(movie.poster)
-            .into(backgroundImage)
+                .load(movie.poster)
+                .into(backgroundImage)
         ageLimitation.text = movie.minimumAge.toString() + "+"
         genre.text = movie.genres.map { it.name }.joinToString(separator = ", ")
         countOfStarsOnRatingBar.rating = movie.ratings / 2

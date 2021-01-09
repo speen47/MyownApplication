@@ -1,4 +1,4 @@
-package com.example.myownapplication
+package com.example.myownapplication.presentation.movieDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.myownapplication.ViewModels.MovieDetailsViewModel
-import com.example.myownapplication.ViewModels.ViewModelFactory
-import com.example.myownapplication.data.Actor
-import com.example.myownapplication.data.Movie
+import com.example.myownapplication.R
+import com.example.myownapplication.domain.models.Actor
+import com.example.myownapplication.domain.models.Movie
+import com.example.myownapplication.presentation.ViewModelFactory
 
 
 class FragmentMoviesDetails() : Fragment() {
@@ -34,9 +34,9 @@ class FragmentMoviesDetails() : Fragment() {
     private var recycler: RecyclerView? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_movies_details, container, false)
 
