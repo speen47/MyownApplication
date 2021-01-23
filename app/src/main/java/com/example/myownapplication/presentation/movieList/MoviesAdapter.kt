@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.example.myownapplication.R
 import com.example.myownapplication.domain.models.Movie
 
@@ -48,9 +48,12 @@ class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun onBind(movie: Movie, clickListener: (Movie) -> Unit) {
         itemView.setOnClickListener { clickListener(movie) }
-        Glide.with(itemView.context)
-                .load(movie.poster)
-                .into(backgroundImage)
+//        Glide.with(itemView.context)
+//                .load(movie.poster)
+//                .into(backgroundImage)
+        backgroundImage.load(movie.poster) {
+            placeholder(R.drawable.img_backgrounf_for_layout)
+        }
         ageLimitation.text = movie.minimumAge.toString() + "+"
         genre.text = movie.genres.map { it.name }.joinToString(separator = ", ")
         countOfStarsOnRatingBar.rating = movie.ratings / 2

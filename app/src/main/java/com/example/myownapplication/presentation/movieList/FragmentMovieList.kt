@@ -15,7 +15,7 @@ import com.example.myownapplication.presentation.movieDetails.FragmentMoviesDeta
 
 class FragmentMovieList : Fragment() {
 
-    private val viewModel: MovieListViewModel by viewModels { ViewModelFactory() }
+    private val viewModel: MovieListViewModel by viewModels { ViewModelFactory(context = requireContext().applicationContext) }
 
 //    val handlerException = CoroutineExceptionHandler { coroutineContext, throwable ->
 //        Log.d("Mylog", "exception handled: ${throwable.message}")
@@ -39,7 +39,7 @@ class FragmentMovieList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = MoviesAdapter {
             requireActivity().supportFragmentManager.beginTransaction()
-                    .add(R.id.main_container, FragmentMoviesDetails.newInstance(it))
+                .add(R.id.main_container, FragmentMoviesDetails.newInstance(it.id))
                     .addToBackStack(null)
                     .commit()
         }

@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import coil.load
 import com.example.myownapplication.R
 import com.example.myownapplication.domain.models.Actor
+
 
 class ActorsAdapter() : RecyclerView.Adapter<ActorsViewHolder>() {
 
@@ -44,9 +44,14 @@ class ActorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun onBind(actor: Actor) {
         name.text = actor.name
-        Glide.with(itemView.context)
-                .load(actor.picture)
-                .apply(RequestOptions().centerCrop())
-                .into(avatar)
+        actor.picture?.let {
+            avatar.load(it) {
+                placeholder(R.drawable.ic_baseline_face_24)
+            }
+        } ?: avatar.setImageResource(R.drawable.ic_baseline_face_24)
+//        Glide.with(itemView.context)
+//                .load(actor.picture)
+//                .apply(RequestOptions().centerCrop().placeholder(R.drawable.ic_baseline_face_24))
+//                .into(avatar)
     }
 }

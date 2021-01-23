@@ -21,7 +21,7 @@ import com.example.myownapplication.presentation.ViewModelFactory
 
 class FragmentMoviesDetails() : Fragment() {
 
-
+    var back: TextView? = null
     var title: TextView? = null
     var banner: ImageView? = null
     var minimumAge: TextView? = null
@@ -29,7 +29,7 @@ class FragmentMoviesDetails() : Fragment() {
     var rating: RatingBar? = null
     var overview: TextView? = null
 
-    private val viewModel: MovieDetailsViewModel by viewModels { ViewModelFactory() }
+    private val viewModel: MovieDetailsViewModel by viewModels { ViewModelFactory(requireContext().applicationContext) }
     private lateinit var adapter: ActorsAdapter
     private var recycler: RecyclerView? = null
 
@@ -41,30 +41,35 @@ class FragmentMoviesDetails() : Fragment() {
         val view = inflater.inflate(R.layout.fragment_movies_details, container, false)
 
         findViews(view)
+        back?.setOnClickListener { requireActivity().onBackPressed() }
+
 
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val movie = arguments?.getSerializable(KEY) as Movie
-
+//        val movie = arguments?.getSerializable(KEY) as Movie
+        val currentId = arguments?.getLong(KEY)
         adapter = ActorsAdapter()
         // var actors = ActorsDataSource().getActors()
         recycler = view.findViewById(R.id.rv_actors)
         recycler?.adapter = adapter
         recycler?.layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
 
 
-        viewModel.openMoviesLiveData.observe(this.viewLifecycleOwner, { (it?.let { setContentViews(it, view) }) })
+        viewModel.openMoviesLiveData.observe(
+            this.viewLifecycleOwner,
+            { (it?.let { setContentViews(it, view) }) })
         viewModel.openActorsLiveData.observe(this.viewLifecycleOwner, { it.let { upDateList(it) } })
 
-        viewModel.getMovieDetails(movie.id)
-        viewModel.getActors(movie.id)
+        currentId?.let { viewModel.getMovieDetails(it) }
+        currentId?.let { viewModel.getActors(it) }
     }
 
 
     private fun findViews(view: View) {
+        back = view.findViewById(R.id.tv_back)
         title = view.findViewById(R.id.tv_title)
         banner = view.findViewById(R.id.banner)
         minimumAge = view.findViewById(R.id.minimum_age)
@@ -92,9 +97,9 @@ class FragmentMoviesDetails() : Fragment() {
     }
 
     companion object {
-        fun newInstance(movie: Movie): FragmentMoviesDetails {
+        fun newInstance(currentId: Long): FragmentMoviesDetails {
             val bundle = Bundle()
-            bundle.putSerializable(KEY, movie)
+            bundle.putLong(KEY, currentId)
             return FragmentMoviesDetails().apply {
                 arguments = bundle
             }

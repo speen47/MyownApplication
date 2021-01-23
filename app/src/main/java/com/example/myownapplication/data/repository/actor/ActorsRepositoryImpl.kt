@@ -9,7 +9,7 @@ class ActorsRepositoryImpl : ActorsRepository {
         val result = RetrofitModule.actorsApi.getActors(id = id).cast
         return result.map {
             it.copy(
-                    profilePath = baseUrl + "original" + it.profilePath
+                profilePath = it.profilePath?.let { baseUrl + "original" + it }
             )
         }
     }

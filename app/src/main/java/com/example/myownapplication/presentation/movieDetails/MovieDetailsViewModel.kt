@@ -1,5 +1,6 @@
 package com.example.myownapplication.presentation.movieDetails
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,11 +13,11 @@ import com.example.myownapplication.domain.movie.MoviesInteractor
 import com.example.myownapplication.domain.movie.MoviesInteractorImpl
 import kotlinx.coroutines.*
 
-class MovieDetailsViewModel() : ViewModel() {
+class MovieDetailsViewModel(val context: Context) : ViewModel() {
 
     private var actors = listOf<Actor>()
 
-    private val movieInteractor: MoviesInteractor = MoviesInteractorImpl()
+    private val movieInteractor: MoviesInteractor = MoviesInteractorImpl(context)
     private val actorsInteractor: ActorsInteractor = ActorsInteractorImpl()
 
     private val moviesLiveData: MutableLiveData<Movie?> = MutableLiveData(null)
